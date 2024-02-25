@@ -1,17 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
-const mongoConnect = require("./util/database").mongoConnect;
+const mongoose = require("mongoose");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.send("Welcome to my server!");
-});
-
-mongoConnect(() => {
-  app.listen(3000);
-});
+mongoose
+  .connect(
+    "mongodb+srv://harshita:hfBBamGFQiV8m0Va@todo-app.rtwu0cs.mongodb.net/todo?retryWrites=true&w=majority"
+  )
+  .then((res) => {
+    app.listen(4000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
