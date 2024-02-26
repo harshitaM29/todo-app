@@ -15,10 +15,12 @@ exports.postTodoData = async (req, res) => {
     const todoData = new Todo({
       description,
       isCompleted,
+      userId: req.user._id,
     });
-    await Todo.save();
+    await todoData.save();
     res.status(201).json(todoData);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -26,6 +28,7 @@ exports.postTodoData = async (req, res) => {
 exports.changeIsCompleted = async (req, res) => {
   const id = req.params.id;
   const isCompleted = req.body.isCompleted;
+  console.log(id, isCompleted);
   try {
     const todo = await Todo.findOne({
       _id: id,
@@ -33,7 +36,7 @@ exports.changeIsCompleted = async (req, res) => {
     if (todo) {
       await todo.updateOne({ isCompleted: isCompleted });
     }
-    res.status(200).json("success");
+    res.status(200).json(todo);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
