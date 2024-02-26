@@ -3,7 +3,6 @@ import { Form, Button, ButtonGroup, Card } from "react-bootstrap";
 import { useState, useRef } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-console.log(process.env.REACT_APP_API_URL);
 const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();

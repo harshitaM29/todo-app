@@ -6,20 +6,26 @@ const TodoContextProvider = (props) => {
   const [list, setList] = useState([]);
   const addTodo = async (data, token) => {
     try {
-      const response = await axios.post("http://localhost:4000/todo", data, {
-        headers: { Authorization: token },
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/todo`,
+        data,
+        {
+          headers: { Authorization: token },
+        }
+      );
       setList([...list, response.data]);
     } catch (error) {
-      console.log(error);
       throw new Error(error);
     }
   };
   const fetchAllTodo = async (token) => {
     try {
-      const response = await axios.get("http://localhost:4000/todo", {
-        headers: { Authorization: token },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/todo`,
+        {
+          headers: { Authorization: token },
+        }
+      );
       setList(response.data);
     } catch (error) {
       throw new Error(error);
@@ -31,7 +37,7 @@ const TodoContextProvider = (props) => {
       const index = list.findIndex((item) => item._id === id);
       list[index].isCompleted = isCompleted;
       const response = await axios.put(
-        `http://localhost:4000/change/${id}`,
+        `${process.env.REACT_APP_API_URL}/change/${id}`,
         { isCompleted: isCompleted },
         {
           headers: { Authorization: token },
@@ -46,8 +52,8 @@ const TodoContextProvider = (props) => {
   const deleteTodo = async (id, token) => {
     try {
       const newList = list.filter((item) => item._id !== id);
-      console.log(newList);
-      await axios.delete(`http://localhost:4000/todo-delete/${id}`, {
+
+      await axios.delete(`${process.env.REACT_APP_API_URL}/todo-delete/${id}`, {
         headers: { Authorization: token },
       });
       setList([...newList]);

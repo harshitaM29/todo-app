@@ -21,7 +21,6 @@ exports.postUserData = async (req, res, next) => {
     await userData.save();
     return res.status(201).json(userData);
   } catch (err) {
-    console.log(err.code);
     return res.status(400).json(err.code);
   }
 };
